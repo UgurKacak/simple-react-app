@@ -3,7 +3,7 @@ import { createStore } from "redux";
 const initialState = {
 	name: "",
 	email: "",
-	localization: ""
+	localization: "en"
 };
 
 const changeState = (state = initialState, { type, ...rest }) => {
