@@ -135,7 +135,7 @@ const ContactUs = () => {
 	};
 	return (
 		<Card>
-			<Card.Header>Contact Us</Card.Header>
+			<Card.Header>{t('contact-us')}</Card.Header>
 			<Card.Body>
 				<Form>
 					<Row className="mb-3">

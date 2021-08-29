@@ -7,7 +7,7 @@ import { FaBolt } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
 const Header = () => {
-	const { t, i18n } = useTranslation();
+	const { t } = useTranslation();
 
 	const setGlobalState = useDispatch();
 	const userName = useSelector((state) => state.name);
@@ -26,6 +26,7 @@ const Header = () => {
 	const login = (formValues) => {
 		console.log("Login action triggered");
 		delete formValues.password;
+
 		setGlobalState({ type: "set", ...formValues });
 	};
 
@@ -34,7 +35,7 @@ const Header = () => {
 	};
 
 	const languageHandler = (e) => {
-		i18n.changeLanguage(e.target.value);
+		setGlobalState({ type: "set", localization: e.target.value });
 	};
 	return (
 		<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{ marginBottom: "20px" }}>

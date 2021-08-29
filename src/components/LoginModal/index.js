@@ -11,7 +11,7 @@ const LoginModal = (props) => {
 		name: "",
 		email: "",
 		password: "",
-		localization: ""
+		localization: "tr"
 	});
 
 	const handleChange = (e) => {
@@ -55,7 +55,7 @@ const LoginModal = (props) => {
 					</Form.Group>
 					<Form.Group className="mb-3" controlId="login-localization">
 						<Form.Label>{t("input-localization")}</Form.Label>
-						<Form.Select aria-label="Localization">
+						<Form.Select aria-label="Localization" onChange={handleChange}>
 							<option disabled>{t("input-localization-placeholder")}</option>
 							<option value="tr">Türkçe</option>
 							<option value="en">English</option>
