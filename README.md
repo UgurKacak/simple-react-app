@@ -1,4 +1,4 @@
-# Sample Spring Boot Rest API
+# Simple React App
 
 ✨It is a simple React Application and not yet ready for prod environments.✨
 
