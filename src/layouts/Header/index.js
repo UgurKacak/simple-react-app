@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import LoginModal from "../../components/LoginModal";
-import { Navbar, Container, Nav, Form, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import { FaBolt } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import Select from "react-select";
 
 const Header = () => {
 	const { t } = useTranslation();
@@ -12,6 +13,7 @@ const Header = () => {
 	const setGlobalState = useDispatch();
 	const userName = useSelector((state) => state.name);
 	const userEmail = useSelector((state) => state.email);
+	const localization = useSelector((state) => state.localization);
 	const [show, setShow] = useState(false);
 
 	const LoginHandler = () => {
@@ -26,7 +28,6 @@ const Header = () => {
 	const login = (formValues) => {
 		console.log("Login action triggered");
 		delete formValues.password;
-
 		setGlobalState({ type: "set", ...formValues });
 	};
 
@@ -34,8 +35,21 @@ const Header = () => {
 		setShow(false);
 	};
 
-	const languageHandler = (e) => {
-		setGlobalState({ type: "set", localization: e.target.value });
+	const localizationHandler = (e) => {
+		setGlobalState({ type: "set", localization: e.value });
+	};
+
+	const localizationList = [
+		{ value: "tr", label: "Türkçe" },
+		{ value: "en", label: "English" }
+	];
+
+	const customStyles = {
+		control: (base) => ({
+			...base,
+			width: 250,
+			minWidth: 250
+		})
 	};
 	return (
 		<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{ marginBottom: "20px" }}>
@@ -57,14 +71,24 @@ const Header = () => {
 						</LinkContainer>
 					</Nav>
 
-					<Nav style={{ marginRight: "10px" }}>
-						<Form.Select aria-label="Localization" onChange={languageHandler}>
-							<option disabled>Select Localization</option>
-							<option value="en">English</option>
-							<option value="tr">Türkçe</option>
-						</Form.Select>
+					<Nav>
+						<Select
+							className="basic-single"
+							classNamePrefix="select"
+							placeholder={t("select-country")}
+							isDisabled={false}
+							isLoading={false}
+							isClearable={false}
+							isRtl={false}
+							value={localization === "tr" ? localizationList[0] : localizationList[1]}
+							isSearchable={false}
+							name="Country"
+							options={localizationList}
+							onChange={localizationHandler}
+							styles={customStyles}
+							required
+						/>
 					</Nav>
-
 					{userName === "" ? (
 						<Nav>
 							<Nav.Link onClick={LoginHandler}>{t("login")}</Nav.Link>

@@ -5,17 +5,23 @@ import * as Yup from "yup";
 import _ from "lodash";
 import { Card, Col, Form, Button, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
-const ContactUs = () => {
+
+const phoneRegExp =
+	/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
+
+const ContactUs = (props) => {
 	const { t } = useTranslation();
 	const userName = useSelector((state) => state.name);
 	const userEmail = useSelector((state) => state.email);
+	const localization = useSelector((state) => state.localization);
 
 	const [validationErrors, setValidationErrors] = useState({
-		name: "name is required!",
-		email: "email is required!",
-		phone: "phone is required!",
-		message: "message is required!"
+		name: t("name-required-text"),
+		email: t("email-required-text"),
+		phone: t("phone-required-text"),
+		message: t("message-required-text")
 	});
+
 	const [formValues, setFormValues] = useState({
 		name: "",
 		email: "",
@@ -24,58 +30,41 @@ const ContactUs = () => {
 		message: ""
 	});
 
-	const phoneRegExp =
-		/^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/;
 	let yupSchema = Yup.object().shape({
-		name: Yup.string(t('must-be-string'))
-			.test(
-				"empty check",
-				t("not-empty"),
-				function (value) {
-					return value.trim() === "" ? false : true;
-				}
-			)
-			.required(t('this-field-required')),
-		email: Yup.string(t('must-be-string'))
+		name: Yup.string(t("must-be-string"))
+			.test("empty check", t("not-empty"), function (value) {
+				return value.trim() === "" ? false : true;
+			})
+			.required(t("this-field-required")),
+		email: Yup.string(t("must-be-string"))
 			.email(t("email-must-be-valid"))
-			.test(
-				"empty check",
-				t("not-empty"),
-				function (value) {
-					return value.trim() === "" ? false : true;
-				}
-			)
-			.required(t('this-field-required')),
-		phone: Yup.string(t('must-be-string'))
-			.matches(phoneRegExp, t('invalid-phone'))
-			.test(
-				"empty check",
-				t("not-empty"),
-				function (value) {
-					return value.trim() === "" ? false : true;
-				}
-			)
-			.required(t('this-field-required')),
-		country: Yup.string(t('must-be-string'))
+			.test("empty check", t("not-empty"), function (value) {
+				return value.trim() === "" ? false : true;
+			})
+			.required(t("this-field-required")),
+		phone: Yup.string(t("must-be-string"))
+			.matches(phoneRegExp, t("invalid-phone"))
+			.test("empty check", t("not-empty"), function (value) {
+				return value.trim() === "" ? false : true;
+			})
+			.required(t("this-field-required")),
+		country: Yup.string(t("must-be-string"))
 			.max(2)
-			.test(
-				"empty check",
-				t("not-empty"),
-				function (value) {
-					return value.trim() === "" ? false : true;
-				}
-			)
-			.required(t('this-field-required')),
-		message: Yup.string(t('must-be-string'))
-			.test(
-				"empty check",
-				t("not-empty"),
-				function (value) {
-					return value.trim() === "" ? false : true;
-				}
-			)
-			.required(t('this-field-required')),
+			.test("empty check", t("not-empty"), function (value) {
+				return value.trim() === "" ? false : true;
+			})
+			.required(t("this-field-required")),
+		message: Yup.string(t("must-be-string"))
+			.test("empty check", t("not-empty"), function (value) {
+				return value.trim() === "" ? false : true;
+			})
+			.required(t("this-field-required"))
 	});
+
+	useEffect(() => {
+		setFormValues({ ...formValues, name: userName, email: userEmail });
+		// eslint-disable-next-line
+	}, [localization]);
 
 	useEffect(() => {
 		validate();
@@ -135,7 +124,7 @@ const ContactUs = () => {
 	};
 	return (
 		<Card>
-			<Card.Header>{t('contact-us')}</Card.Header>
+			<Card.Header>{t("contact-us")}</Card.Header>
 			<Card.Body>
 				<Form>
 					<Row className="mb-3">

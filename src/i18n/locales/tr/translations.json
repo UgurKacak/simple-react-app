@@ -1,5 +1,5 @@
 {
-	"home-page": "Ana Sayfa",
+	"home-page": "Harry Potter",
 	"contact-us": "Bize Ulaş",
 	"welcome": "Hoşgeldiniz",
 	"login": "Giriş Yap",
@@ -39,5 +39,11 @@
 	"email-must-be-valid": "Geçerli bir email giriniz!",
 	"invalid-phone": "Telefon numarası geçerli olmalı!",
 	"404-text": "Aradığınız sayfa bulunamadı.",
-	"404-link": "Anasayfaya git"
+	"404-link": "Anasayfaya git",
+	"name-required-text": "Ad alanı zorunludur!",
+	"email-required-text": "Email alanı zorunludur!",
+	"phone-required-text": "Telefon alanı zorunludur!",
+	"message-required-text": "Mesaj alanı zorunludur!",
+	"select-localization": "Lütfen dil seçiniz",
+	"fill-all-login-info": "Lütfen tüm alanları doldurunuz"
 }

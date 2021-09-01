@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Alert } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 const LoginModal = (props) => {
@@ -19,13 +19,25 @@ const LoginModal = (props) => {
 		key = key.replace("login-", "");
 		setFormValues({ ...formValues, [key]: e.target.value });
 	};
+
+	const handleSubmit = (e) => {
+		login(formValues);
+		setFormValues({});
+		handleClose();
+	};
+
+	const checkFormValues = () => {
+		return formValues.name === "" || formValues.email === "" || formValues.password === ""
+			? false
+			: true;
+	};
 	return (
 		<Modal show={show} onHide={handleClose}>
 			<Modal.Header closeButton>
 				<Modal.Title>{t("login")}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<Form>
+				<Form noValidate>
 					<Form.Group className="mb-3" controlId="login-name">
 						<Form.Label>{t("input-name")}</Form.Label>
 						<Form.Control
@@ -61,17 +73,15 @@ const LoginModal = (props) => {
 							<option value="en">English</option>
 						</Form.Select>
 					</Form.Group>
+					{!checkFormValues() ? <Alert variant="danger">{t("fill-all-login-info")}</Alert> : null}
 					<Modal.Footer>
 						<Button variant="secondary" onClick={handleClose}>
 							{t("button-cancel")}
 						</Button>
 						<Button
 							variant="primary"
-							onClick={() => {
-								login(formValues);
-								setFormValues({});
-								handleClose();
-							}}>
+							disabled={!checkFormValues()}
+							onClick={handleSubmit}>
 							{t("button-login")}
 						</Button>
 					</Modal.Footer>
